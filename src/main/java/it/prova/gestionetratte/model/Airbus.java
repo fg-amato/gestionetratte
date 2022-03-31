@@ -48,6 +48,15 @@ public class Airbus {
 		this.numeroPasseggeri = numeroPasseggeri;
 	}
 
+	public Airbus(Long id, String codice, String descrizione, Date dataInizioServizio, Integer numeroPasseggeri) {
+		super();
+		this.id = id;
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.dataInizioServizio = dataInizioServizio;
+		this.numeroPasseggeri = numeroPasseggeri;
+	}
+
 	public Airbus(String codice, String descrizione, Date dataInizioServizio, Integer numeroPasseggeri,
 			Set<Tratta> tratte) {
 		super();
