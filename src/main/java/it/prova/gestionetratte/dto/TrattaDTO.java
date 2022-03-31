@@ -151,10 +151,9 @@ public class TrattaDTO {
 		return result;
 	}
 
-	public static List<TrattaDTO> createTrattaDTOListFromModelList(List<Tratta> modelListInput,
-			boolean includeRegisti) {
+	public static List<TrattaDTO> createTrattaDTOListFromModelList(List<Tratta> modelListInput, boolean includeAirbus) {
 		return modelListInput.stream().map(trattaEntity -> {
-			return TrattaDTO.buildTrattaDTOFromModel(trattaEntity, includeRegisti);
+			return TrattaDTO.buildTrattaDTOFromModel(trattaEntity, includeAirbus);
 		}).collect(Collectors.toList());
 	}
 

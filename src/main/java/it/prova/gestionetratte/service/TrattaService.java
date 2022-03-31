@@ -22,4 +22,6 @@ public interface TrattaService {
 	public Page<Tratta> findByExampleWithPagination(Tratta example, Integer pageNo, Integer pageSize, String sortBy);
 
 	public void rimuovi(Long idTrattaToRemove);
+
+	public List<Tratta> annullaTratte();
 }

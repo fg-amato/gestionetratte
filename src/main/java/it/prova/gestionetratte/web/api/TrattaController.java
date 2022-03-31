@@ -83,4 +83,10 @@ public class TrattaController {
 				.findByExampleWithPagination(example.buildTrattaModel(), pageNo, pageSize, sortBy).getContent();
 		return TrattaDTO.createTrattaDTOListFromModelList(tratte, false);
 	}
+
+	@GetMapping("/concludiTratte")
+	public List<TrattaDTO> concludiTratte() {
+
+		return TrattaDTO.createTrattaDTOListFromModelList(trattaService.annullaTratte(), true);
+	}
 }

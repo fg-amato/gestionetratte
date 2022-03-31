@@ -1,6 +1,8 @@
 package it.prova.gestionetratte.service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.Predicate;
@@ -20,6 +22,7 @@ import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.tratta.TrattaRepository;
 import it.prova.gestionetratte.web.api.exception.TrattaNonAnnullataException;
 import it.prova.gestionetratte.web.api.exception.TrattaNotFoundException;
+
 @Service
 public class TrattaServiceImpl implements TrattaService {
 
@@ -107,6 +110,7 @@ public class TrattaServiceImpl implements TrattaService {
 	}
 
 	@Override
+	@Transactional
 	public void rimuovi(Long idTrattaToRemove) {
 		Tratta toRemove = repository.findSingleTrattaEager(idTrattaToRemove);
 		if (toRemove == null) {
@@ -117,6 +121,36 @@ public class TrattaServiceImpl implements TrattaService {
 					"La tratta con id: " + idTrattaToRemove + " non è in stato disattivato");
 		}
 		repository.deleteById(idTrattaToRemove);
+	}
+
+	@Override
+	@Transactional
+	public List<Tratta> annullaTratte() {
+		List<Tratta> result = new ArrayList<>();
+
+		for (Tratta temp : repository.findAll()) {
+			if (temp.getStato().equals(StatoTratta.ATTIVA)) {
+				if (TrattaServiceImpl.isCloseable(temp)) {
+					temp.setStato(StatoTratta.CONCLUSA);
+					repository.save(temp);
+					result.add(temp);
+				}
+			}
+		}
+		return result;
+	}
+
+	private static Boolean isCloseable(Tratta input) {
+		if (input.getData().after(new Date())) {
+			return false;
+		}
+
+		if (input.getData().before(new Date())) {
+			return true;
+		}
+
+		return input.getOraAtterraggio().isBefore(LocalTime.now());
+
 	}
 
 }
