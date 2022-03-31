@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionetratte.model.Airbus;
@@ -19,6 +20,7 @@ import it.prova.gestionetratte.repository.airbus.AirbusRepository;
 import it.prova.gestionetratte.web.api.exception.AirbusConTratteException;
 import it.prova.gestionetratte.web.api.exception.AirbusNotFoundException;
 
+@Service
 public class AirbusServiceImpl implements AirbusService {
 
 	@Autowired
@@ -81,7 +83,7 @@ public class AirbusServiceImpl implements AirbusService {
 						cb.like(cb.upper(root.get("descrizione")), "%" + example.getDescrizione().toUpperCase() + "%"));
 
 			if (example.getNumeroPasseggeri() != null)
-				predicates.add(cb.greaterThanOrEqualTo(root.get("minutiDurata"), example.getNumeroPasseggeri()));
+				predicates.add(cb.greaterThanOrEqualTo(root.get("numeroPasseggeri"), example.getNumeroPasseggeri()));
 
 			if (example.getDataInizioServizio() != null)
 				predicates

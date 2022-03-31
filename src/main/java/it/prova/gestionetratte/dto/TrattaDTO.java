@@ -135,7 +135,7 @@ public class TrattaDTO {
 		Tratta result = new Tratta(this.id, this.codice, this.descrizione, this.data, this.oraDecollo,
 				this.oraAtterraggio, this.stato);
 		if (this.airbus != null)
-			result.setAirbus(null);
+			result.setAirbus(this.getAirbus().buildAirbusModel());
 
 		return result;
 	}
